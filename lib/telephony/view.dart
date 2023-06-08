@@ -17,33 +17,22 @@ class View extends GetView<ViewController> {
                   ? const ShowErrorScreen()
                   : Center(
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Text('phoneNumber: ${controller.phoneNumber.value}'),
-                          const SizedBox(height: 10),
-                          Text(
-                              'networkOperator: ${controller.networkOperator.value}'),
-                          const SizedBox(height: 10),
-                          Text('deviceIMEI: ${controller.deviceIMEI.value}'),
-                          const SizedBox(height: 10),
-                          Text(
-                              'simSerialNumber: ${controller.simSerialNumber.value}'),
-                          const SizedBox(height: 10),
-                          Text('simState: ${controller.simState.value}'),
-                          const SizedBox(height: 10),
-                          Text('isInCall: ${controller.isInCall.value}'),
-                          const SizedBox(height: 10),
-                          Text(
-                              'isVoiceCapable: ${controller.isVoiceCapable.value}'),
-                          const SizedBox(height: 10),
-                          Text('deviceId: ${controller.deviceId.value}'),
-                          const SizedBox(height: 10),
-                          Text(
-                              'isNetworkRoaming: ${controller.isNetworkRoaming.value}'),
-                          const SizedBox(height: 10),
-                          Text(
-                              'subscriberId: ${controller.subscriberId.value}'),
-                          const SizedBox(height: 10),
-                          Text('phoneType: ${controller.phoneType.value}'),
+                          Text('Sim Card Number:${controller.number.value}'),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text('Carrier Name: ${controller.carrierName.value}'),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text('Country Iso: ${controller.countryIso.value}'),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text('Sim State: ${controller.simState.value}'),
                         ],
                       ),
                     );

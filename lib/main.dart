@@ -26,7 +26,7 @@ class Telephony extends StatelessWidget {
       home: Scaffold(
         body: Center(
           child: ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               Get.toNamed('/sim-info');
             },
             child: const Text('Check Telephony Manager'),

@@ -1,20 +1,16 @@
 import 'package:flutter/services.dart';
+import 'dart:developer' as debug;
 
 class TelephonyRepository {
   const TelephonyRepository();
   final MethodChannel methodChannel = const MethodChannel('device_sim_info');
-  Future<Map<String, String>> getInfo() async {
+  Future<dynamic> getInfo() async {
     try {
-      final Map<String, String> info =
-          await methodChannel.invokeMethod('getInfo');
-      if (info.isEmpty) {
-        return {'Error': 'Unable to get permission'};
-      }
+      final info = await methodChannel.invokeMethod('getInfo');
+      debug.log(info);
       return info;
     } on PlatformException catch (e) {
-      return {
-        'Error': e.toString(),
-      };
+      return e.toString();
     }
   }
 }
