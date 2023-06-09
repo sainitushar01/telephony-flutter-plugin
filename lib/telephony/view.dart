@@ -33,6 +33,15 @@ class View extends GetView<ViewController> {
                             height: 10,
                           ),
                           Text('Sim State: ${controller.simState.value}'),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text('Phone type: ${controller.phoneType.value}'),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                              'Sim Slot Count: ${controller.simSlotCount.value}'),
                         ],
                       ),
                     );

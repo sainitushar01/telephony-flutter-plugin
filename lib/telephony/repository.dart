@@ -1,16 +1,23 @@
 import 'package:flutter/services.dart';
-import 'dart:developer' as debug;
 
 class TelephonyRepository {
   const TelephonyRepository();
   final MethodChannel methodChannel = const MethodChannel('device_sim_info');
-  Future<dynamic> getInfo() async {
+
+  Future<Map<String, String>> getInfo() async {
     try {
-      final info = await methodChannel.invokeMethod('getInfo');
-      debug.log(info);
+      final simState = await methodChannel.invokeMethod('getSimState');
+      final phoneType = await methodChannel.invokeMethod('getPhoneType');
+      final simSlotCount = await methodChannel.invokeMethod('getSimSlotCount');
+      Map<String, String> info = {};
+      info["simState"] = simState;
+      info["phoneType"] = phoneType;
+      info["simSlotCount"] = simSlotCount.toString();
       return info;
     } on PlatformException catch (e) {
-      return e.toString();
+      return {
+        "ERROR": e.toString(),
+      };
     }
   }
 }
