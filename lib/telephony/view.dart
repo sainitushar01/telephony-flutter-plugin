@@ -42,6 +42,11 @@ class View extends GetView<ViewController> {
                           ),
                           Text(
                               'Sim Slot Count: ${controller.simSlotCount.value}'),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                              'Subscription Id For Slot: ${controller.subscriptionIdForSlot.value}'),
                         ],
                       ),
                     );

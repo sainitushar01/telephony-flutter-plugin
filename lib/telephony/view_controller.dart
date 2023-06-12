@@ -14,6 +14,7 @@ class ViewController extends GetxController {
   final simState = "".obs;
   final phoneType = "".obs;
   final simSlotCount = "".obs;
+  final subscriptionIdForSlot = "".obs;
   // ignnecessary_overrides
   @override
   void onInit() {
@@ -34,6 +35,7 @@ class ViewController extends GetxController {
     try {
       final List<mobile.SimCard> simCard =
           ((await mobile.MobileNumber.getSimCards)!);
+      developer.log((simCard.length).toString());
       final info = await const TelephonyRepository().getInfo();
       simState.value = info["simState"]!;
       phoneType.value = info["phoneType"]!;
@@ -41,6 +43,7 @@ class ViewController extends GetxController {
       carrierName.value = simCard[0].carrierName ?? "not found";
       number.value = simCard[0].number ?? "not found";
       countryIso.value = simCard[0].countryIso ?? "not found";
+      subscriptionIdForSlot.value = info["getSID"]!;
       isFetching.value = false;
     } on PlatformException catch (e) {
       isFetching.value = false;

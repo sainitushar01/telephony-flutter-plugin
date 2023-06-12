@@ -9,7 +9,7 @@ import android.telephony.SubscriptionManager
 import android.content.pm.PackageManager
 import android.Manifest
 import android.telecom.Call
-
+import android.telephony.SubscriptionInfo
 class MainActivity: FlutterActivity() {
     private val CHANNEL="device_sim_info";
     private lateinit var telephonyManager: TelephonyManager
@@ -24,10 +24,20 @@ class MainActivity: FlutterActivity() {
                 "getPhoneType" -> result.success(getPhoneType())
                 "getSimState"  -> result.success(getSimState())
                 "getSimSlotCount" -> result.success(getSimSlotCount())
-                // "checkPermission"  -> result.success(checkPermission())
+                "getSubscriptionId"  -> result.success(getSID())
             } 
         }
     }
+private fun getSID():Int{
+  
+        val arr:IntArray?= subscriptionManager.getSubscriptionIds(1);
+        if(arr==null){
+         return 0
+        }
+        else{
+          return arr[0]
+        }
+  }
     private fun getSimSlotCount():Int{
          return subscriptionManager.getActiveSubscriptionInfoCountMax ()
     }
