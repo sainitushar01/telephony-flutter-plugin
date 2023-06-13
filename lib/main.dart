@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:telephony/telephony/view.dart';
 import 'package:telephony/telephony/view_binding.dart';
+import 'package:telephony/telephony/view_controller.dart';
 
 void main() {
-  runApp(const Telephony());
+  runApp(Telephony());
 }
 
 class Telephony extends StatelessWidget {
-  const Telephony({super.key});
-
+  Telephony({super.key});
+  final controller = Get.put(ViewController());
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(

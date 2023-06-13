@@ -28,10 +28,6 @@ class View extends GetView<ViewController> {
                           const SizedBox(
                             height: 10,
                           ),
-                          Text('Country Iso: ${controller.countryIso.value}'),
-                          const SizedBox(
-                            height: 10,
-                          ),
                           Text('Sim State: ${controller.simState.value}'),
                           const SizedBox(
                             height: 10,

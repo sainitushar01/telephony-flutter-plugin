@@ -25,9 +25,17 @@ class MainActivity: FlutterActivity() {
                 "getSimState"  -> result.success(getSimState())
                 "getSimSlotCount" -> result.success(getSimSlotCount())
                 "getSubscriptionId"  -> result.success(getSID())
+                "getCarrierName"-> result.success(getCarrierName())
+                "getPhoneNumber" -> result.success(getPhoneNumber())
             } 
         }
     }
+private fun getPhoneNumber():String{
+  return telephonyManager.getLine1Number();
+}
+private fun getCarrierName():String{
+  return telephonyManager.getSimOperatorName();
+}
 private fun getSID():Int{
   
         val arr:IntArray?= subscriptionManager.getSubscriptionIds(1);
@@ -39,7 +47,7 @@ private fun getSID():Int{
         }
   }
     private fun getSimSlotCount():Int{
-         return subscriptionManager.getActiveSubscriptionInfoCountMax ()
+         return subscriptionManager.getActiveSubscriptionInfoCountMax()
     }
     private fun getPhoneType():String{
       val phoneType=telephonyManager.getPhoneType()
@@ -60,7 +68,7 @@ private fun getSID():Int{
       return "NONE"
     }
     private fun getSimState():String{
-        val simState=telephonyManager.getSimState()
+        val simState=telephonyManager.getSimState(1)
         when (simState){  
             1->{
               return  "ABSENT"
