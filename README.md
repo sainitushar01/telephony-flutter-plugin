@@ -1,6 +1,6 @@
 # telephony
 
-A new Flutter project.
+Plugin to get SIM related info for both android and ios
 
 ## Getting Started
 
