@@ -11,7 +11,7 @@ import android.Manifest
 import android.telecom.Call
 import android.telephony.SubscriptionInfo
 class MainActivity: FlutterActivity() {
-    private val CHANNEL="device_sim_info";
+    private val CHANNEL="sim.flutter.methodchannel/android";
     private lateinit var telephonyManager: TelephonyManager
     private lateinit var subscriptionManager: SubscriptionManager
     private val READ_PRIVILEGED_PHONE_STATE_REQUEST_CODE=1

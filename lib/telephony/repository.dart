@@ -1,17 +1,18 @@
 import 'package:flutter/services.dart';
+import 'dart:developer' as dd;
 
 class TelephonyRepository {
-  const TelephonyRepository();
-  final MethodChannel methodChannel = const MethodChannel('device_sim_info');
-
-  Future<Map<String, String>> getInfo() async {
+  static const methodChannel =
+      MethodChannel('sim.flutter.methodchannel/android');
+  static const platformChannel = MethodChannel('sim.flutter.methodchannel/ios');
+  static Future<Map<String, String>> getInfoAndroid() async {
     try {
-      final simState = await methodChannel.invokeMethod('getSimState');
-      final phoneType = await methodChannel.invokeMethod('getPhoneType');
       final simSlotCount = await methodChannel.invokeMethod('getSimSlotCount');
-      final getSID = await methodChannel.invokeMethod("getSubscriptionId");
       final phoneNumber = await methodChannel.invokeMethod('getPhoneNumber');
       final carrierName = await methodChannel.invokeMethod('getCarrierName');
+      final getSID = await methodChannel.invokeMethod("getSubscriptionId");
+      final phoneType = await methodChannel.invokeMethod('getPhoneType');
+      final simState = await methodChannel.invokeMethod('getSimState');
       Map<String, String> info = {};
       info["simState"] = simState.toString();
       info["phoneType"] = phoneType.toString();
@@ -19,6 +20,20 @@ class TelephonyRepository {
       info["getSID"] = getSID.toString();
       info["carrierName"] = carrierName.toString();
       info["phoneNumber"] = phoneNumber.toString();
+      return info;
+    } on PlatformException catch (e) {
+      return {
+        "ERROR": e.toString(),
+      };
+    }
+  }
+
+  static Future<Map<String, String>> getInfoIOS() async {
+    try {
+      final deviceModel = await platformChannel.invokeMethod('getDeviceModel');
+      dd.log(deviceModel);
+      Map<String, String> info = {};
+      info["deviceModel"] = deviceModel.toString();
       return info;
     } on PlatformException catch (e) {
       return {

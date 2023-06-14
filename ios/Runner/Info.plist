@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app requires your location to retrieve SIM card information and provide accurate network-related details.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app needs continuous access to your location to retrieve SIM card information and provide real-time network-related details, even when running in the background.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app requires continuous access to your location to retrieve SIM card information and provide up-to-date network-related details, even when the app is not running.</string>
+	
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
