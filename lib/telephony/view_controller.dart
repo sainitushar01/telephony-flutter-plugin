@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:telephony/telephony/repository.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/foundation.dart';
-import 'dart:developer' as dd;
 
 class ViewController extends GetxController {
   final isFetching = true.obs;
@@ -14,6 +13,10 @@ class ViewController extends GetxController {
   final phoneType = "".obs;
   final simSlotCount = "".obs;
   final subscriptionIdForSlot = "".obs;
+  final deviceModel = "".obs;
+  final isoCountryCode = "".obs;
+  final mobileCountryCode = "".obs;
+  final mobileNetworkCode = "".obs;
   // ignnecessary_overrides
   String get platform {
     if (defaultTargetPlatform == TargetPlatform.android) {
@@ -51,7 +54,11 @@ class ViewController extends GetxController {
         if ((await Permission.locationWhenInUse.request().isGranted) &&
             (await Permission.locationAlways.request().isGranted)) {
           final info = await TelephonyRepository.getInfoIOS();
-          dd.log(info.toString());
+          carrierName.value = info["carrierName"]!;
+          deviceModel.value = info["deviceModel"]!;
+          isoCountryCode.value = info["isoCountryCode"]!;
+          mobileCountryCode.value = info["mobileCountryCode"]!;
+          mobileNetworkCode.value = info["mobileNetworkCode"]!;
         } else {
           Get.defaultDialog(title: 'Give permission bruvvv!');
         }

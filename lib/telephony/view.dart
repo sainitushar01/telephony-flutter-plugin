@@ -16,38 +16,76 @@ class View extends GetView<ViewController> {
               : controller.hasError.value
                   ? const ShowErrorScreen()
                   : Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text('Sim Card Number:${controller.number.value}'),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text('Carrier Name: ${controller.carrierName.value}'),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text('Sim State: ${controller.simState.value}'),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text('Phone type: ${controller.phoneType.value}'),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                              'Sim Slot Count: ${controller.simSlotCount.value}'),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                              'Subscription Id For Slot: ${controller.subscriptionIdForSlot.value}'),
-                        ],
-                      ),
+                      child: (controller.platform == "ios")
+                          ? Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                    'Carrier Name: ${controller.carrierName.value}'),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                    'Device Model: ${controller.deviceModel.value}'),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                    'Iso country code: ${controller.isoCountryCode.value}'),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                    'Mobile Country Code: ${controller.mobileCountryCode.value}'),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                    'Network Code: ${controller.mobileNetworkCode.value}'),
+                              ],
+                            )
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                    'Sim Card Number:${controller.number.value}'),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                    'Carrier Name: ${controller.carrierName.value}'),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text('Sim State: ${controller.simState.value}'),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                    'Phone type: ${controller.phoneType.value}'),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                    'Sim Slot Count: ${controller.simSlotCount.value}'),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                    'Subscription Id For Slot: ${controller.subscriptionIdForSlot.value}'),
+                              ],
+                            ),
                     );
         },
       ),
     );
   }
 }
+/*
+deviceModel"]!;
+o["isoCountryCode"]!;
+info["mobileCountryCode"
+info["mobileNetworkCode"
+*/
