@@ -83,9 +83,3 @@ class View extends GetView<ViewController> {
     );
   }
 }
-/*
-deviceModel"]!;
-o["isoCountryCode"]!;
-info["mobileCountryCode"
-info["mobileNetworkCode"
-*/
