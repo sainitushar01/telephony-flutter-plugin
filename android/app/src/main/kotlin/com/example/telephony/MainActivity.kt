@@ -10,6 +10,8 @@ import android.content.pm.PackageManager
 import android.Manifest
 import android.telecom.Call
 import android.telephony.SubscriptionInfo
+import android.os.Build
+
 class MainActivity: FlutterActivity() {
     private val CHANNEL="sim.flutter.methodchannel/android";
     private lateinit var telephonyManager: TelephonyManager
@@ -22,70 +24,128 @@ class MainActivity: FlutterActivity() {
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger,CHANNEL).setMethodCallHandler {call,result->
             when (call.method){
                 "getPhoneType" -> result.success(getPhoneType())
-                "getSimState"  -> result.success(getSimState())
+                "getSimState"  -> {
+                  val slotIndex = call.argument<Int>("slotIndex")
+                  if(slotIndex!=null)
+                  result.success(getSimState(slotIndex))
+                }
                 "getSimSlotCount" -> result.success(getSimSlotCount())
-                "getSubscriptionId"  -> result.success(getSID())
-                "getCarrierName"-> result.success(getCarrierName())
-                "getPhoneNumber" -> result.success(getPhoneNumber())
+                "getSubscriptionId"  -> {
+                  val slotIndex = call.argument<Int>("slotIndex")
+                  if(slotIndex!=null)
+                  result.success(getSID(slotIndex))
+                }
+                "getCarrierName"-> {
+                  val slotIndex=call.argument<Int>("slotIndex")
+                  if(slotIndex!=null)
+                  result.success(getCarrierName(slotIndex))
+                }
+                "getPhoneNumber" -> {
+                  val slotIndex=call.argument<Int>("slotIndex")
+                  if(slotIndex!=null)
+                  result.success(getPhoneNumber(slotIndex))
+                }
             } 
         }
     }
-private fun getPhoneNumber():String{
-  return telephonyManager.getLine1Number();
+private fun getPhoneNumber(slotIndex:Int):String {
+  val simState=getSimState(slotIndex);
+  if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+    if(simState=="ABSENT"){
+      return "sim not found";
+    }
+    else if(simState=="ACTIVE"){
+      return telephonyManager.getLine1Number();
+    }
+    else if(simState=="LOCKED, pin required"){
+    return "SIM locked";
+    }
+    else if(simState=="LOCKED, puk required"){
+      return "SIM locked"
+    }
+    else{
+      return telephonyManager.getLine1Number();
+    }
+} else {
+   val subId=getSID(slotIndex);
+   if(simState=="ABSENT"){
+    return "sim not found";
+  }
+  else if(simState=="ACTIVE"){
+    return subscriptionManager.getPhoneNumber(subId);
+  }
+  else {
+  return "SIM locked";
+  }
 }
-private fun getCarrierName():String{
-  return telephonyManager.getSimOperatorName();
 }
-private fun getSID():Int{
-  
-        val arr:IntArray?= subscriptionManager.getSubscriptionIds(1);
+
+private fun getCarrierName(slotIndex:Int):String{
+  val simState=getSimState(slotIndex);
+  if(simState=="ABSENT"){
+    return "sim not found";
+  }
+  else if(simState=="ACTIVE"){
+    return telephonyManager.getSimOperatorName();
+  }
+  else{
+  return "SIM locked";
+  }
+}
+
+private fun getSID(slotIndex:Int):Int{
+        val arr:IntArray? = subscriptionManager.getSubscriptionIds(slotIndex);
         if(arr==null){
-         return 0
+         return 0;
         }
         else{
-          return arr[0]
+          return arr[0];
         }
-  }
-    private fun getSimSlotCount():Int{
-         return subscriptionManager.getActiveSubscriptionInfoCountMax()
-    }
-    private fun getPhoneType():String{
-      val phoneType=telephonyManager.getPhoneType()
-      when(phoneType){
-        1->{
-          return "GSM"
-        }
-        2->{
-          return  "CDMA"
-        }
-        3->{
-          return "SIP"
-        }
-        4->{
-          return "THIRD_PARTY"
-        }
+}
+
+private fun getSimState(slotIndex:Int):String{
+  val simState=telephonyManager.getSimState(slotIndex)
+  when (simState){  
+      1->{
+        return  "ABSENT"
       }
-      return "NONE"
-    }
-    private fun getSimState():String{
-        val simState=telephonyManager.getSimState(1)
-        when (simState){  
-            1->{
-              return  "ABSENT"
-            }
-            2->{
-              return  "LOCKED, pin required"
-            }
-            3->{
-               return  "LOCKED, puk required"
-            }
-            4->{
-               return  "LOCKED to network operator"
-            }
-            5->{
-               return  "ACTIVE"
-            }
-          }    
-          return "Unknown"
-        }
-    }
+      2->{
+        return  "LOCKED, pin required"
+      }
+      3->{
+         return  "LOCKED, puk required"
+      }
+      4->{
+         return  "LOCKED to network operator"
+      }
+      5->{
+         return  "ACTIVE"
+      }
+    }    
+    return "Unknown"
+  }
+
+ private fun getSimSlotCount():Int{
+  return subscriptionManager.getActiveSubscriptionInfoCountMax()
+}
+
+private fun getPhoneType():String{
+val phoneType=telephonyManager.getPhoneType()
+
+when(phoneType){
+ 1->{
+   return "GSM"
+ }
+ 2->{
+   return "CDMA"
+ }
+ 3->{
+   return "SIP"
+ }
+ 4->{
+   return "THIRD_PARTY"
+ }
+}
+return "NONE"
+}
+}

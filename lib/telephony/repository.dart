@@ -7,12 +7,17 @@ class TelephonyRepository {
   static const platformChannel = MethodChannel('sim.flutter.methodchannel/ios');
   static Future<Map<String, String>> getInfoAndroid() async {
     try {
+      const slotIndex = 1;
       final simSlotCount = await methodChannel.invokeMethod('getSimSlotCount');
-      final phoneNumber = await methodChannel.invokeMethod('getPhoneNumber');
-      final carrierName = await methodChannel.invokeMethod('getCarrierName');
-      final getSID = await methodChannel.invokeMethod("getSubscriptionId");
+      final phoneNumber = await methodChannel
+          .invokeMethod('getPhoneNumber', {'slotIndex': slotIndex});
+      final carrierName = await methodChannel
+          .invokeMethod('getCarrierName', {'slotIndex': slotIndex});
+      final getSID = await methodChannel
+          .invokeMethod("getSubscriptionId", {'slotIndex': slotIndex});
       final phoneType = await methodChannel.invokeMethod('getPhoneType');
-      final simState = await methodChannel.invokeMethod('getSimState');
+      final simState = await methodChannel
+          .invokeMethod('getSimState', {'slotIndex': slotIndex});
       Map<String, String> info = {};
       info["simState"] = simState.toString();
       info["phoneType"] = phoneType.toString();
@@ -20,6 +25,7 @@ class TelephonyRepository {
       info["getSID"] = getSID.toString();
       info["carrierName"] = carrierName.toString();
       info["phoneNumber"] = phoneNumber.toString();
+      info["slotIndex"] = slotIndex.toString();
       return info;
     } on PlatformException catch (e) {
       return {

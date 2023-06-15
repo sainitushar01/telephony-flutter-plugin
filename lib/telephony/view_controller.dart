@@ -12,11 +12,12 @@ class ViewController extends GetxController {
   final simState = "".obs;
   final phoneType = "".obs;
   final simSlotCount = "".obs;
-  final subscriptionIdForSlot = "".obs;
+  final subscriptionId = "".obs;
   final deviceModel = "".obs;
   final isoCountryCode = "".obs;
   final mobileCountryCode = "".obs;
   final mobileNetworkCode = "".obs;
+  final slotIndex = "".obs;
   // ignnecessary_overrides
   String get platform {
     if (defaultTargetPlatform == TargetPlatform.android) {
@@ -45,7 +46,8 @@ class ViewController extends GetxController {
           simSlotCount.value = info["simSlotCount"]!;
           carrierName.value = info["carrierName"]!;
           number.value = info["phoneNumber"]!;
-          subscriptionIdForSlot.value = info["getSID"]!;
+          subscriptionId.value = info["getSID"]!;
+          slotIndex.value = info["slotIndex"]!;
           isFetching.value = false;
         } else {
           Get.defaultDialog(title: 'Give permission bruvvv!');

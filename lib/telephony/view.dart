@@ -74,7 +74,12 @@ class View extends GetView<ViewController> {
                                   height: 10,
                                 ),
                                 Text(
-                                    'Subscription Id For Slot: ${controller.subscriptionIdForSlot.value}'),
+                                    'Subscription Id: ${controller.subscriptionId.value}'),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                    'Slot Index: ${controller.slotIndex.value}'),
                               ],
                             ),
                     );
