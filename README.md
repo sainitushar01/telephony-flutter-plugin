@@ -1,4 +1,4 @@
 # telephony
 
-Plugin to get SIM related info for both android and ios
+Plugin to get SIM related info for android
 
